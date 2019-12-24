@@ -45,13 +45,21 @@ public abstract class Book {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (numberOfPages != book.numberOfPages) return false;
+        return name != null ? name.equals(book.name) : book.name == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        int result = numberOfPages;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override

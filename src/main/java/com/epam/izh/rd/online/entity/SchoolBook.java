@@ -60,13 +60,26 @@ public class SchoolBook extends Book {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        SchoolBook that = (SchoolBook) o;
+
+        if (authorName != null ? !authorName.equals(that.authorName) : that.authorName != null) return false;
+        if (authorLastName != null ? !authorLastName.equals(that.authorLastName) : that.authorLastName != null)
+            return false;
+        return publishDate != null ? publishDate.equals(that.publishDate) : that.publishDate == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (authorName != null ? authorName.hashCode() : 0);
+        result = 31 * result + (authorLastName != null ? authorLastName.hashCode() : 0);
+        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
+        return result;
     }
 
     @Override

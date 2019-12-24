@@ -68,13 +68,25 @@ public class Author {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        if (name != null ? !name.equals(author.name) : author.name != null) return false;
+        if (lastName != null ? !lastName.equals(author.lastName) : author.lastName != null) return false;
+        if (birthdate != null ? !birthdate.equals(author.birthdate) : author.birthdate != null) return false;
+        return country != null ? country.equals(author.country) : author.country == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (birthdate != null ? birthdate.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        return result;
     }
 
     @Override
