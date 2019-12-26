@@ -44,7 +44,8 @@ public class Main {
         {/* SECTION FOR PLAYING WITH ASSERTIONS */
 
             try {
-                Assert.isTrue(1 == 2, "What? 1 == 2? That's not true!!!");
+                Assert.isTrue(1 == 1, "What? 1 == 2? That's not true!!!");
+                System.out.println("\nAssertion is successful. The requirement was met. Good job, man!\n");
             } /*catch ( IllegalArgumentException e ) {
                 System.out.println("What was that?!");
             }*/ catch ( Exception e ) {
