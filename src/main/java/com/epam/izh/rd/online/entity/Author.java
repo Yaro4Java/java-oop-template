@@ -91,12 +91,23 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
+        return "instance of class Author: { " +
                 "name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthdate=" + birthdate +
                 ", country='" + country + '\'' +
-                '}';
+                " }";
+    }
+
+    // Original method toString()
+    public String objectToString() {
+        return super.toString();
+    }
+
+
+    public String ToStringHash() {
+        return Object.class.hashCode() + " ( " + Integer.toHexString(Object.class.hashCode()) + " )";
+
     }
 
 }
