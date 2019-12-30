@@ -91,7 +91,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return "instance of class Author: { " +
+        return "instance of class Author = { " +
                 "name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthdate=" + birthdate +

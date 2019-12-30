@@ -1,53 +1,18 @@
 package com.epam.izh.rd.online;
 
 import com.epam.izh.rd.online.entity.Author;
+import com.epam.izh.rd.online.repository.SimpleAuthorRepository;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import org.springframework.util.Assert;
 import org.springframework.util.SocketUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        {/* SECTION FOR DEBUGGING CLASS Author */
-//
-//            Author author1 = new Author();
-//
-//            author1.setName("Yaroslav");
-//            author1.setCountry("Russia");
-//
-//            class FreakAuthor extends Author {
-//                public FreakAuthor(String name) {
-//                    this.setName(name);
-//                }
-//
-//                @Override
-//                public int hashCode() {
-//                    return Object.class.hashCode();
-//                }
-//
-//            }
-//
-//            FreakAuthor freak = new FreakAuthor("John");
-//
-//            System.out.println("author1.objectToString(): " + author1.objectToString());
-//            System.out.println("author1.toString(): " + author1.toString());
-//            System.out.println("\n" + "author1 is the following " + author1.toString());
-//
-//            System.out.println("\nHash code1 for author " + author1.getName() + " is " + author1.hashCode());
-//            System.out.println("Hash code2 for author " + author1.getName() + " is " + author1.hashCode());
-//            System.out.println("Hash code3 for author " + author1.getName() + " is " + author1.hashCode());
-//
-//            System.out.println("\nHash code1 for author " + freak.getName() + " is " + freak.hashCode());
-//            System.out.println("Hash code2 for author " + freak.getName() + " is " + freak.hashCode());
-//            System.out.println("Hash code3 for author " + freak.getName() + " is " + freak.hashCode());
-//            System.out.println("author1.ToStringHash(): " + author1.ToStringHash());
-
-        }/* END OF DEBUGGING CLASS Author */
-
 
         {/* SECTION FOR PLAYING WITH ASSERTIONS */
 
@@ -304,6 +269,59 @@ public class Main {
             System.out.println("\n/* END OF DEBUGGING BINDING METHODS */\n");
 
         }/* END OF DEBUGGING BINDING METHODS */
+
+
+        {/* SECTION FOR DEBUGGING CLASSES */
+
+            System.out.println("\n/* SECTION FOR DEBUGGING CLASSES */\n");
+
+            Author author1 = new Author("Yaroslav", "Kozlov", LocalDate.of(1974,10,05), "Russia");
+            Author author2 = new Author("James", "Bond", null, "UK");
+            Author author3 = new Author("Wolfgang", "Mozart", LocalDate.of(1756,01,27), "Austria");
+
+            SimpleAuthorRepository rep4Authors = new SimpleAuthorRepository();
+
+            System.out.println("author1.toString(): " + author1.toString());
+            System.out.println("author2.toString(): " + author2.toString());
+            System.out.println("author3.toString(): " + author3.toString());
+
+            System.out.println("\nNumber of authors saved in repository is " + rep4Authors.count());
+
+            System.out.println("\nSaving author1 in repository");
+            rep4Authors.save(author1);
+            System.out.println("Number of authors saved in repository is " + rep4Authors.count());
+
+            System.out.println("\nSaving author2 in repository");
+            rep4Authors.save(author2);
+            System.out.println("Number of authors saved in repository is " + rep4Authors.count());
+
+            System.out.println("\nSaving author3 in repository");
+            rep4Authors.save(author3);
+            System.out.println("Number of authors saved in repository is " + rep4Authors.count());
+
+            Author found;
+            found = rep4Authors.findByFullName("James", "Bond");
+            System.out.println("\nIs James Bond in repository? " + (found == null ? "No: " : "Yes: ") + found);
+            found = rep4Authors.findByFullName("Vasya", "Pupkin");
+            System.out.println("Is Vasya Pupkin in repository? " + (found == null ? "No: " : "Yes: ") + found);
+
+            Author vasya = new Author("Vasya","Pupkin",null, null);
+            System.out.println("\nSaving author Vasya Pupkin in repository");
+            rep4Authors.save(vasya);
+            System.out.println("Number of authors saved in repository is " + rep4Authors.count());
+
+            found = rep4Authors.findByFullName("Vasya", "Pupkin");
+            System.out.println("Is Vasya Pupkin in repository? " + (found == null ? "No: " : "Yes: ") + found);
+
+            System.out.println("\nRemoving author Vasya Pupkin from repository");
+            rep4Authors.remove(vasya);
+            System.out.println("Number of authors saved in repository is " + rep4Authors.count());
+            found = rep4Authors.findByFullName("Vasya", "Pupkin");
+            System.out.println("Is Vasya Pupkin in repository? " + (found == null ? "No: " : "Yes: ") + found);
+
+            System.out.println("\n/* END OF DEBUGGING CLASSES */\n");
+
+        }/* END OF DEBUGGING CLASSES */
 
         System.exit(0);
     }
