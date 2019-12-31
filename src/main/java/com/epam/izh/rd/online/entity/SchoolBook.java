@@ -84,7 +84,12 @@ public class SchoolBook extends Book {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "instance of class SchoolBook = { " +
+                "Number of pages = " + this.getNumberOfPages() +
+                ", Name='" + this.getName() + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", authorLastName='" + authorLastName + '\'' +
+                ", publishDate=" + publishDate +
+                "' }";
     }
-
 }

@@ -1,7 +1,9 @@
 package com.epam.izh.rd.online;
 
 import com.epam.izh.rd.online.entity.Author;
+import com.epam.izh.rd.online.entity.SchoolBook;
 import com.epam.izh.rd.online.repository.SimpleAuthorRepository;
+import com.epam.izh.rd.online.repository.SimpleSchoolBookRepository;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import org.springframework.util.Assert;
@@ -275,6 +277,8 @@ public class Main {
 
             System.out.println("\n/* SECTION FOR DEBUGGING CLASSES */\n");
 
+            System.out.println("********** Working with authors repository **********\n");
+
             Author author1 = new Author("Yaroslav", "Kozlov", LocalDate.of(1974,10,05), "Russia");
             Author author2 = new Author("James", "Bond", null, "UK");
             Author author3 = new Author("Wolfgang", "Mozart", LocalDate.of(1756,01,27), "Austria");
@@ -318,6 +322,63 @@ public class Main {
             System.out.println("Number of authors saved in repository is " + rep4Authors.count());
             found = rep4Authors.findByFullName("Vasya", "Pupkin");
             System.out.println("Is Vasya Pupkin in repository? " + (found == null ? "No: " : "Yes: ") + found);
+
+            System.out.println("\n********** Working with books repository **********\n");
+
+            SchoolBook book1 = new SchoolBook(250, "The hound of the Baskervilles", "Arthur", "Conan Doyle", null);
+            SchoolBook book2 = new SchoolBook(300, "The hound of the Baskervilles", "Arthur", "Doyle", null);
+            SchoolBook book3 = new SchoolBook(1000, "Short stories", "James", "Bond", null);
+
+            SimpleSchoolBookRepository rep4Books = new SimpleSchoolBookRepository();
+
+            System.out.println("book1.toString(): " + book1.toString());
+            System.out.println("book2.toString(): " + book2.toString());
+            System.out.println("book3.toString(): " + book3.toString());
+
+            System.out.println("\nNumber of books saved in repository is " + rep4Books.count());
+
+            System.out.println("\nSaving book1 in repository");
+            rep4Books.save(book1);
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            System.out.println("\nSaving book2 in repository");
+            rep4Books.save(book2);
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            System.out.println("\nSaving book3 in repository");
+            rep4Books.save(book3);
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            SchoolBook[] foundBooks;
+            foundBooks = rep4Books.findByName("The hound of the Baskervilles");
+            System.out.println("\nIs \"The hound of the Baskervilles\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
+
+            SchoolBook vasyasBook = new SchoolBook(500, "Memoirs", "Vasya", "Pupkin", null);
+
+            foundBooks = rep4Books.findByName("Memoirs");
+            System.out.println("\nIs \"Memoirs\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
+
+            System.out.println("\nSaving the book \"Memoirs\" by Vasya Pupkin in repository");
+            rep4Books.save(vasyasBook);
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            foundBooks = rep4Books.findByName("Memoirs");
+            System.out.println("\nIs \"Memoirs\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
+
+            System.out.println("\nRemoving \"Memoirs\" from repository");
+            rep4Books.removeByName("Memoirs");
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            System.out.println("\nRemoving \"The hound of the Baskervilles\" from repository");
+            rep4Books.removeByName("The hound of the Baskervilles");
+            System.out.println("Number of books saved in repository is " + rep4Books.count());
+
+            foundBooks = rep4Books.findByName("Memoirs");
+            System.out.println("\nIs \"Memoirs\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
+
+            foundBooks = rep4Books.findByName("The hound of the Baskervilles");
+            System.out.println("\nIs \"The hound of the Baskervilles\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
+
 
             System.out.println("\n/* END OF DEBUGGING CLASSES */\n");
 

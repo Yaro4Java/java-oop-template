@@ -64,7 +64,9 @@ public abstract class Book {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "instance of class Book = { " +
+                "numberOfPages=" + numberOfPages +
+                ", name='" + name + '\'' +
+                "' }";
     }
-
 }

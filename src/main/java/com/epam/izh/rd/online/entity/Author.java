@@ -98,16 +98,4 @@ public class Author {
                 ", country='" + country + '\'' +
                 " }";
     }
-
-    // Original method toString()
-    public String objectToString() {
-        return super.toString();
-    }
-
-
-    public String ToStringHash() {
-        return Object.class.hashCode() + " ( " + Integer.toHexString(Object.class.hashCode()) + " )";
-
-    }
-
 }
