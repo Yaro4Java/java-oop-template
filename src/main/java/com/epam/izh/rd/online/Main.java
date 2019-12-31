@@ -4,10 +4,11 @@ import com.epam.izh.rd.online.entity.Author;
 import com.epam.izh.rd.online.entity.SchoolBook;
 import com.epam.izh.rd.online.repository.SimpleAuthorRepository;
 import com.epam.izh.rd.online.repository.SimpleSchoolBookRepository;
+import com.epam.izh.rd.online.service.SimpleAuthorService;
+import com.epam.izh.rd.online.service.SimpleSchoolBookService;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
-import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import org.springframework.util.Assert;
-import org.springframework.util.SocketUtils;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -379,6 +380,34 @@ public class Main {
             foundBooks = rep4Books.findByName("The hound of the Baskervilles");
             System.out.println("\nIs \"The hound of the Baskervilles\" in repository? " + (foundBooks.length == 0 ? "No books with such a title!" : "Yes: 1 of " + foundBooks.length + " is an " + foundBooks[0].toString() ));
 
+            System.out.println("\n********** Using services ***********\n");
+
+            // Creating service with methods for authors repository
+            SimpleAuthorService ser4Authors = new SimpleAuthorService(rep4Authors);
+
+            // Creating service with functionality to work with books taking in account given authors repository
+            SimpleSchoolBookService ser4Books = new SimpleSchoolBookService(rep4Books, ser4Authors);
+
+            System.out.println("Number of books in storage is: " + ser4Books.count());
+            System.out.println("Number of authors registered is: " + ser4Authors.count());
+
+            System.out.println("\nRecording author Vasya Pupkin into authors repository ...");
+            rep4Authors.save(vasya);
+            System.out.println("Now the number of registered authors is: " + ser4Authors.count());
+
+            System.out.println("\nAdding 5 instances of the book \"Memoirs\" by Vasya Pupkin to book storage ...");
+            for (int i=0; i < 5; i++) {
+                rep4Books.save(vasyasBook);
+            }
+            System.out.println("Now total number of books in the storage is: " + ser4Books.count());
+            System.out.println("Number of book \"Memoirs\" in the storage is: " + ser4Books.getNumberOfBooksByName("Memoirs") + " of " + ser4Books.count());
+            System.out.println("1st found \"Memoirs\" is: " + ser4Books.findByName("Memoirs")[0]);
+            System.out.println("The author of \"Memoirs\" is: " + ser4Books.findAuthorByBookName("Memoirs"));
+
+            System.out.println("\nRemoving all (5) instances of the book \"Memoirs\" by Vasya Pupkin from the book storage ...");
+            ser4Books.removeByName("Memoirs");
+            System.out.println("Now total number of books in the storage is: " + ser4Books.count());
+            System.out.println("Number of book \"Memoirs\" in the storage is: " + ser4Books.getNumberOfBooksByName("Memoirs") + " of " + ser4Books.count());
 
             System.out.println("\n/* END OF DEBUGGING CLASSES */\n");
 

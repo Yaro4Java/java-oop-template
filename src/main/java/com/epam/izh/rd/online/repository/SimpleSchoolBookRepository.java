@@ -30,9 +30,7 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
     @Override
     public boolean save(SchoolBook book) {
 
-        if (book == null) {
-            return false;
-        } else {
+        try {
 
             SchoolBook[] temp;
             temp = schoolBooks;
@@ -44,6 +42,9 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
 
             schoolBooks[counter++] = book;
             return true;
+
+        } catch (Exception e) { // If saving failed, return false
+            return false;
         }
     }
 
